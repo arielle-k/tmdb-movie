@@ -1,0 +1,7 @@
+{
+  "name": "tmdb-movie",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

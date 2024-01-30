@@ -1,0 +1,24 @@
+
+.title-home {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.list-genre-card {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+
+  img {
+    height: 40vh;
+    object-fit: cover;
+    width: 100%;
+  }
+}
+
+.favori {
+  position: absolute;
+  top: 0.5rem;
+  left: 0rem;
+  z-index: 10;
+}

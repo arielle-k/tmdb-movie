@@ -1,0 +1,10 @@
+.list-search-card {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+
+  img {
+    height: 40vh;
+    object-fit: cover;
+    width: 100%;
+  }
+}

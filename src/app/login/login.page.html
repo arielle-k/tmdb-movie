@@ -1,0 +1,94 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="secondary">
+    <ion-title>login</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <!-- FORMULAIRE LOGIN & REGISTER BEGIN -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title class="ion-text-center">
+        <h2 color="primary" class="title-login">Login</h2>
+      </ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <form>
+        <div>
+          <ion-icon name="mail"></ion-icon>
+          <ion-input
+            label="Mail"
+            labelPlacement="floating"
+            placeholder="Mail"
+          ></ion-input>
+        </div>
+        <div>
+          <ion-icon name="key"></ion-icon>
+          <ion-input
+            label="Password"
+            labelPlacement="floating"
+            placeholder="Password"
+          ></ion-input>
+        </div>
+        <div class="btn-login">
+          <ion-button>Login</ion-button>
+        </div>
+      </form>
+
+      <div class="register">
+        <ion-label>
+          Don't have an account yet ?
+          <ion-text color="secondary"> Register here</ion-text>
+        </ion-label>
+      </div>
+    </ion-card-content>
+  </ion-card>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title class="ion-text-center">
+        <h2 color="primary" class="title-login">Register</h2>
+      </ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <form>
+        <div>
+          <ion-icon name="person"></ion-icon>
+          <ion-input
+            label="Username"
+            labelPlacement="floating"
+            placeholder="Username"
+          ></ion-input>
+        </div>
+        <div>
+          <ion-icon name="mail"></ion-icon>
+          <ion-input
+            label="Mail"
+            labelPlacement="floating"
+            placeholder="Mail"
+          ></ion-input>
+        </div>
+        <div>
+          <ion-icon name="key"></ion-icon>
+          <ion-input
+            label="Password"
+            labelPlacement="floating"
+            placeholder="Password"
+          ></ion-input>
+        </div>
+        <div class="btn-login">
+          <ion-button>Register</ion-button>
+        </div>
+      </form>
+
+      <div class="register">
+        <ion-label>
+          Already have an account ?
+          <ion-text color="secondary"> Login here</ion-text>
+        </ion-label>
+      </div>
+    </ion-card-content>
+  </ion-card>
+  <!-- FORMULAIRE LOGIN & REGISTER END -->
+</ion-content>
