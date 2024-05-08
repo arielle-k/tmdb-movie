@@ -4,7 +4,7 @@ import { TabsPage } from './tabs.page';
 
 const routes: Routes = [
   {
-    path: 'tabs',
+    path: '',
     component: TabsPage,
     children: [
       {
@@ -28,7 +28,7 @@ const routes: Routes = [
         loadChildren: () => import('../movie-details/movie-details.module').then( m => m.MovieDetailsPageModule)
       },
       {
-        path: '',
+       path: '',
         redirectTo: '/tabs/tab1',
         pathMatch: 'full'
       }
@@ -37,7 +37,7 @@ const routes: Routes = [
   {
     path: '',
     redirectTo: '/tabs/tab1',
-    pathMatch: 'full'
+   pathMatch: 'full'
   }
 ];
 

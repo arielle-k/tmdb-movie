@@ -1,0 +1,83 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Person</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <ion-card>
+      <img
+        alt="{{person.name}}"
+        src="https://image.tmdb.org/t/p/w370_and_h556_bestv2{{ person?.profile_path }}"/>
+      <ion-card-header>
+        <ion-card-title class="ion-text-center" color="tertiary">{{ person?.name }}</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        <ion-grid>
+          <ion-row class="ion-align-items-start">
+            <ion-col class="ion-text-left" size="auto">
+              <ion-note>Biographie</ion-note>
+            </ion-col>
+            <ion-col>
+              <ion-label class="ion-text-right" lines="4">{{ person?.biography }}</ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-row class="ion-align-items-start">
+            <ion-col class="ion-text-left" size="auto">
+              <ion-note>Born</ion-note>
+            </ion-col>
+            <ion-col>
+              <ion-label class="ion-text-right">{{ person?.birthday}} </ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-row class="ion-align-items-start">
+            <ion-col class="ion-text-left" size="auto">
+              <ion-note> Known For</ion-note>
+            </ion-col>
+            <ion-col>
+              <ion-label class="ion-text-right">{{ person?.known_for_department }}</ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-row class="ion-align-items-start">
+            <ion-col class="ion-text-left" size="auto">
+              <ion-note> Place of Birth</ion-note>
+            </ion-col>
+            <ion-col>
+              <ion-label class="ion-text-right">{{ person?.place_of_birth }}</ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-row class="ion-align-items-start">
+            <ion-col class="ion-text-left" size="auto">
+              <ion-note>Death</ion-note>
+            </ion-col>
+            <ion-col>
+              <ion-label class="ion-text-right">{{  person?.deathday }}</ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-row class="ion-align-items-start">
+         </ion-row>
+        </ion-grid>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card>
+      <ion-card-content>
+        <ion-card-header>
+          <ion-card-title class="title-home">
+            <div>Similar Movies</div>
+            <div>
+              <ion-icon name="videocam-outline"></ion-icon>
+            </div>
+          </ion-card-title>
+        </ion-card-header>
+        <div class="gallery" >
+        <div *ngFor="let similar_movie of person_cast.slice(0, 10) " class="gallery-element" [routerLink]="['/movies/', similar_movie.id]" >
+            <img src="https://image.tmdb.org/t/p/w370_and_h556_bestv2/{{similar_movie?.poster_path}}" />
+            <p class="movie-title">{{ similar_movie?.title }}</p>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+</ion-content>

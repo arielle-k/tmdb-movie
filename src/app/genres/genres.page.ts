@@ -1,5 +1,8 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { Platform } from '@ionic/angular';
+import { TmdbService } from '../services/tmdb.service';
+import { ActivatedRoute, Params } from '@angular/router';
+import { delay } from 'rxjs';
 
 @Component({
   selector: 'app-genres',
@@ -8,36 +11,30 @@ import { Platform } from '@ionic/angular';
 })
 export class GenresPage implements OnInit {
   private platform = inject(Platform); //A importer
+  moviesGenre: any;
+  title: string='';
+  public id: string='';
+  loader = true;
 
-  constructor() {}
-
-  public cards = [
-    {
-        source: "https://images.unsplash.com/photo-1705783679154-c47fab616434?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    },
-    {
-        source: "https://images.unsplash.com/photo-1705719418761-3808881d06b4?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    },
-    {
-        source: "https://images.unsplash.com/photo-1705615427885-800da48ba0b7?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    },
-    {
-        source: "https://images.unsplash.com/photo-1705522409239-87c3c13496e8?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    },
-    {
-        source: "https://images.unsplash.com/photo-1705351953374-76117bc519e1?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    },
-    {
-        source: "https://images.unsplash.com/photo-1705773895630-0b15890ded6e?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    },
-    {
-        source: "https://images.unsplash.com/photo-1682687981907-170c006e3744?q=80&w=2671&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    }
-];
+  constructor(private tmdb: TmdbService,private router: ActivatedRoute) {}
 
   ngOnInit() {
-    console.log("H")
+    this.router.params.subscribe((params: Params) => {
+      this.id = params['id'];
+      this.title = params['name'];
+      this.getMoviesGenre(this.id);
+    });
   }
+
+  //obtenir les films par genre
+  getMoviesGenre(id:string) {
+    this.tmdb.getMoviesByGenre(id).pipe(delay(2000)).subscribe((res: any) => {
+        this.moviesGenre = res.results;
+        this.loader = false;
+    });
+  }
+
+  //Faire une boucle foreach et map pour ajouter stateWatchLater des films
 
   getBackButtonText() {
     const isIos = this.platform.is('ios');
@@ -46,7 +43,9 @@ export class GenresPage implements OnInit {
 
   clicked = false;
 
-  isClick() {
+  isClick(index: number) {
     this.clicked = !this.clicked;
+    // Définir l'état cliqué pour le film spécifique à l'index donné
+    this.moviesGenre[index].clicked = !this.moviesGenre[index].clicked;
   }
 }

@@ -1,0 +1,100 @@
+<ion-header [translucent]="true">
+  <ion-toolbar >
+    <ion-title>TMDB Movie</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content color="white" [fullscreen]="true">
+<!-- FORMULAIRE LOGIN & REGISTER BEGIN -->
+<ion-card color="tertiary" *ngIf="showLogin">
+  <ion-card-header>
+    <ion-card-title class="ion-text-center">
+      <h2 color="primary" class="title-login">Login</h2>
+    </ion-card-title>
+  </ion-card-header>
+
+  <ion-card-content>
+    <form #loginForm="ngForm">
+      <div>
+        <ion-icon name="mail"></ion-icon>
+        <ion-input
+          label="Email"
+          labelPlacement="floating"
+          placeholder="Mail"
+          ngModel name="email"
+        ></ion-input>
+      </div>
+      <div>
+        <ion-icon name="key"></ion-icon>
+        <ion-input
+          label="Password"
+          labelPlacement="floating"
+          placeholder="Password"
+          ngModel name="password"
+          type="password"
+
+        ></ion-input>
+      </div>
+      <div class="btn-login">
+        <ion-button (click)="onLogin(loginForm)">Login</ion-button>
+      </div>
+    </form>
+
+    <div class="register">
+      <ion-label> Don't have an account yet ? <ion-text color="secondary" (click)="toggleForm()"> Register here</ion-text> </ion-label>
+    </div>
+  </ion-card-content>
+</ion-card>
+
+<!-- register -->
+<ion-card color="light" *ngIf="!showLogin">
+  <ion-card-header>
+    <ion-card-title class="ion-text-center">
+      <h2 color="primary"  class="title-login">Register</h2>
+    </ion-card-title>
+  </ion-card-header>
+
+  <ion-card-content>
+    <form #f="ngForm" >
+      <div>
+        <ion-icon name="person"></ion-icon>
+        <ion-input
+          label="Username"
+          labelPlacement="floating"
+          placeholder="Username"
+          ngModel name="displayName"
+        ></ion-input>
+      </div>
+      <div>
+        <ion-icon name="mail"></ion-icon>
+        <ion-input
+          label="Mail"
+          labelPlacement="floating"
+          placeholder="Mail"
+          ngModel name="email"
+        ></ion-input>
+      </div>
+      <div>
+        <ion-icon name="key"></ion-icon>
+        <ion-input
+          label="Password"
+          labelPlacement="floating"
+          placeholder="Password"
+          ngModel name="password"
+          type="password"
+        ></ion-input>
+      </div>
+      <div class="btn-login">
+        <ion-button (click)="onSignUp(f)">Register</ion-button>
+      </div>
+    </form>
+
+    <div class="register">
+      <ion-label> Already have an account ? <ion-text color="secondary" (click)="toggleForm()"> Login here</ion-text> </ion-label>
+    </div>
+  </ion-card-content>
+</ion-card>
+</ion-content>
+
+
+

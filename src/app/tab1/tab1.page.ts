@@ -1,38 +1,109 @@
 import { Component } from '@angular/core';
+import { TmdbService } from '../services/tmdb.service';
+import { delay, take } from 'rxjs';
+import { AuthService } from '../services/auth.service';
+import { HistorySearchService } from '../services/history-search.service';
 
+interface Recommendation {
+  results: any[]; // Remplacez any par le type réel des résultats
+  // Autres propriétés si nécessaires
+}
 @Component({
   selector: 'app-tab1',
   templateUrl: 'tab1.page.html',
   styleUrls: ['tab1.page.scss']
 })
 export class Tab1Page {
+  films: any[] = [];
+  movies: any[] = [];
+  topRated: any;
+  nowPlaying: any;
+  upComingMovie:any;
+  genrelist:any[]=[];
+  //responsiveOptions;
+  loader = true;
+  totalResults: any;
+  total_results: any;
+  searchRes: any;
+  popularMovie:any;
+  displayName: string=''
+  recommendedMovies: any[]=[];
+  history: any[] = [];
 
-  constructor() {}
+  constructor(private tmdb:TmdbService, private authservice:AuthService, private historySearch:HistorySearchService) {}
 
-  elements = [1, 2, 3, 4, 5];
+  ngOnInit(){
+    this.getTopRatedMovies(1);
+    this.trendingMovies(1);
+    this.getUpComingMovies(1)
+    this.getPopular(1)
 
-  public cards = [
-    {
-        source: "https://images.unsplash.com/photo-1705783679154-c47fab616434?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    },
-    {
-        source: "https://images.unsplash.com/photo-1705719418761-3808881d06b4?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    },
-    {
-        source: "https://images.unsplash.com/photo-1705615427885-800da48ba0b7?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    },
-    {
-        source: "https://images.unsplash.com/photo-1705522409239-87c3c13496e8?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    },
-    {
-        source: "https://images.unsplash.com/photo-1705351953374-76117bc519e1?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    },
-    {
-        source: "https://images.unsplash.com/photo-1705773895630-0b15890ded6e?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    },
-    {
-        source: "https://images.unsplash.com/photo-1682687981907-170c006e3744?q=80&w=2671&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    //charger les recommendations:
+    this.historySearch.getUserHistory().subscribe(history => {
+      this.history = history;
+      this.loadRecommendations(this.history);
+    });
+
+    //recuperer le nom du user authentifier
+    this.authservice.displayName.subscribe(displayName => {
+      this.displayName = displayName!;
+    });
+
+}
+
+getTopRatedMovies(page: number) {
+  this.tmdb.getTopRatedMovies(page).pipe(delay(2000)).subscribe((res: any) => {
+    this.topRated = res.results;
+    this.totalResults = res.total_results;
+    this.loader = false;
+  },
+  error => console.log(error));
+}
+trendingMovies(page: number) {
+  this.tmdb.getNowPlaying(page).pipe(delay(2000)).subscribe((res: any) => {
+    this.nowPlaying = res.results;
+    this.loader = false;
+  });
+}
+getUpComingMovies(page: number) {
+  this.tmdb.getUpComingMovies(page).pipe(delay(2000)).subscribe((res: any) => {
+    this.upComingMovie = res.results;
+    this.loader = false;
+  });
+}
+
+getPopular(page: number) {
+  this.tmdb.getPopular(page).pipe(delay(2000)).subscribe((res: any) => {
+    this.popularMovie = res.results;
+    this.loader = false;
+  });
+}
+
+//gerer la recommendation du user
+loadRecommendations(history: any[]) {
+  this.authservice.userId.pipe(take(1)).subscribe(userId => {
+    // Vérifiez si l'ID utilisateur est disponible et si l'historique n'est pas vide
+    if (userId && history && history.length > 0) {
+      // Utilisez le premier film de l'historique pour obtenir les recommandations
+      const referenceMovieId = history[0].id;
+
+      console.log('Reference Movie ID:', referenceMovieId);
+
+      this.tmdb.getRecomendMovies(referenceMovieId).subscribe(
+        (recommendations: Recommendation) => {
+          // Traitez les recommandations comme nécessaire dans votre application
+          console.log('Recommendations based on history:', recommendations);
+          this.recommendedMovies = recommendations.results || [];
+        },
+        (error: any) => {
+          console.error('Error fetching recommendations based on history:', error);
+        }
+      );
+    } else {
+      // L'historique est vide ou l'ID utilisateur est indisponible, gérer selon vos besoins
+      console.log('User has no search history or userId is unavailable.');
+      this.recommendedMovies = []; // Assurez-vous que la liste des recommandations est vide
     }
-];
-
+  });
+}
 }

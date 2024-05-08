@@ -1,6 +1,6 @@
 <ion-header [translucent]="true">
   <ion-toolbar color="secondary">
-    <ion-title>User</ion-title>
+    <ion-title>{{ displayName }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -13,19 +13,30 @@
 
   <ion-card>
     <ion-card-header>
-      <ion-card-title> List of movies </ion-card-title>
+      <ion-card-title color="tertiary">List of my farorites</ion-card-title>
     </ion-card-header>
-    <ion-card-content> </ion-card-content>
-  </ion-card>
+    <ion-card-content>
+      <ion-list>
+        <ion-item *ngFor="let movie of favoriteMovies">
+          <div [routerLink]="['/movies/', movie.id]">
+          <ion-thumbnail slot="start">
+            <img alt="" src="https://image.tmdb.org/t/p/w370_and_h556_bestv2/{{movie?.poster_path}}" />
+          </ion-thumbnail>
+          <ion-label>{{ movie.title }}</ion-label>
+        </div>
+        </ion-item>
+        </ion-list>
+      </ion-card-content>
+</ion-card>
   <ion-card>
     <ion-card-header>
-      <ion-card-title> Watch later </ion-card-title>
+      <ion-card-title color="tertiary"> List of my watchList </ion-card-title>
     </ion-card-header>
     <ion-card-content> </ion-card-content>
   </ion-card>
 
   <ion-fab slot="fixed" horizontal="end" vertical="bottom">
-    <ion-fab-button color="danger">
+    <ion-fab-button color="danger" (click)="showLogoutConfirmation()">
       <ion-icon name="log-out"></ion-icon>
     </ion-fab-button>
   </ion-fab>

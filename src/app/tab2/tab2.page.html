@@ -13,9 +13,9 @@
 
   <ion-content color="light">
     <ion-list [inset]="true">
-      <ion-item-sliding *ngFor="let categorie of categories">
-        <ion-item [button]="true" [routerLink]="'/genres'" >
-          <ion-label>{{ categorie.name }}</ion-label>
+      <ion-item-sliding *ngFor="let genre of genreslist">
+        <ion-item [button]="true" (click)="navigateToGenre(genre.id, genre.name)">
+          <ion-label>{{genre.name}}</ion-label>
           <ion-icon name="chevron-forward" color="secondary"></ion-icon>
         </ion-item>
       </ion-item-sliding>

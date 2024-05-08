@@ -10,6 +10,26 @@
       <ion-title size="large">Home</ion-title>
     </ion-toolbar>
   </ion-header>
+  <!--recomendation de film pour user-->
+
+  <ion-card *ngIf="recommendedMovies && recommendedMovies.length > 0">
+    <ion-card-content>
+      <ion-card-header>
+        <ion-card-title class="title-home">
+          <div> Recommendations for you</div>
+          <div>
+            <ion-icon name="heart-outline" color="danger" size="large"></ion-icon>
+          </div>
+        </ion-card-title>
+      </ion-card-header>
+      <div class="gallery">
+        <div *ngFor="let movie of recommendedMovies" class="gallery-element" [routerLink]="['/movies/', movie.id]">
+          <img src="https://image.tmdb.org/t/p/w370_and_h556_bestv2/{{movie.poster_path}}" />
+        </div>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
   <!-- LIST FILM -->
   <ion-card>
     <ion-card-content>
@@ -22,8 +42,8 @@
         </ion-card-title>
       </ion-card-header>
       <div class="gallery">
-        <div *ngFor="let card of cards" class="gallery-element">
-          <img [src]="card.source" />
+        <div *ngFor="let movie of topRated" class="gallery-element" [routerLink]="['/movies/', movie.id]">
+          <img src="https://image.tmdb.org/t/p/w370_and_h556_bestv2/{{movie.poster_path}}" />
         </div>
       </div>
     </ion-card-content>
@@ -39,8 +59,8 @@
         </ion-card-title>
       </ion-card-header>
       <div class="gallery">
-        <div *ngFor="let card of cards" class="gallery-element">
-          <img [src]="card.source" />
+        <div *ngFor="let movie of upComingMovie" class="gallery-element" [routerLink]="['/movies/', movie.id]">
+          <img src="https://image.tmdb.org/t/p/w370_and_h556_bestv2/{{movie.poster_path}}" />
         </div>
       </div>
     </ion-card-content>
@@ -56,8 +76,8 @@
         </ion-card-title>
       </ion-card-header>
       <div class="gallery">
-        <div *ngFor="let card of cards" class="gallery-element">
-          <img [src]="card.source" />
+        <div *ngFor="let movie of popularMovie" class="gallery-element" [routerLink]="['/movies/', movie.id]">
+          <img src="https://image.tmdb.org/t/p/w370_and_h556_bestv2/{{movie.poster_path}}" />
         </div>
       </div>
     </ion-card-content>
@@ -72,9 +92,9 @@
           </div>
         </ion-card-title>
       </ion-card-header>
-      <div class="gallery">
-        <div *ngFor="let card of cards" class="gallery-element">
-          <img [src]="card.source" />
+      <div class="gallery" >
+        <div *ngFor="let movie of nowPlaying " class="gallery-element" [routerLink]="['/movies/', movie.id]">
+          <img src="https://image.tmdb.org/t/p/w370_and_h556_bestv2/{{movie.poster_path}}" />
         </div>
       </div>
     </ion-card-content>

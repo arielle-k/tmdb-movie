@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { TmdbService } from '../services/tmdb.service';
+import { delay } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tab2',
@@ -6,30 +9,22 @@ import { Component } from '@angular/core';
   styleUrls: ['tab2.page.scss'],
 })
 export class Tab2Page {
+  genreslist: any;
+  loader = true;
 
-  constructor() {}
+  constructor(private tmdb: TmdbService,private router: Router) {}
 
-  public categories = [
-    {
-      name: 'Action',
-    },
-    {
-      name: 'Romance',
-    },
-    {
-      name: 'Aventure',
-    },
-    {
-      name: 'Horror',
-    },
-    {
-      name: 'Action',
-    },
-    {
-      name: 'Action',
-    },
-    {
-      name: 'Action',
-    },
-  ];
+  ngOnInit() {
+    this.MovieGenre();
+  }
+
+  MovieGenre() {
+    this.tmdb.getGenres().pipe(delay(2000)).subscribe((res: any) => {
+      this.genreslist = res.genres;
+      this.loader = false;
+    });
+  }
+  navigateToGenre(id: string, name: string) {
+    this.router.navigate(['/genres', id, name]);
+  }
 }

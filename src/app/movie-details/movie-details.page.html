@@ -17,37 +17,60 @@
     </ion-toolbar>
   </ion-header>
 
-   <!-- CARD FILM -->
+<!-- CARD FILM -->
+<ion-card>
+  <ion-button [disabled]="clicked ? 'true': 'false'" color="danger"  class="favori" shape="round" [fill]="clicked ? 'solid' : 'clear'" (click)="isClick()">
+    <ion-icon name="heart"></ion-icon>
+</ion-button>
 
-   <ion-card class="movie">
-    <!-- <ion-fab class="favori"> -->
-    <ion-button
-      [disabled]="clicked ? 'true' : 'false'"
-      [color]="clicked ? 'danger' : 'medium'"
-      class="favori"
-      shape="round"
-      [fill]="clicked ? 'solid' : 'clear'"
-      (click)="isClick()"
-    >
-      <ion-icon name="heart"></ion-icon>
-    </ion-button>
-    <!-- </ion-fab> -->
+
     <img
-      alt="Silhouette of mountains"
-      src="https://ionicframework.com/docs/img/demos/card-media.png"
-    />
+      alt="{{ movie?.poster_path }}"
+      src="https://image.tmdb.org/t/p/original/{{ movie?.poster_path }}"/>
     <ion-card-header>
-      <ion-card-title class="ion-text-center">Aquaman</ion-card-title>
+      <ion-card-title class="ion-text-center" color="tertiary">{{ movie?.title }}</ion-card-title>
     </ion-card-header>
 
     <ion-card-content>
       <ion-grid>
         <ion-row class="ion-align-items-start">
           <ion-col class="ion-text-left" size="auto">
-            <ion-note>Genre</ion-note>
+            <ion-note>Synopsis</ion-note>
           </ion-col>
           <ion-col>
-            <ion-label class="ion-text-right">Action/Aventure</ion-label>
+            <ion-label class="ion-text-right">{{ movie?.overview }}</ion-label>
+          </ion-col>
+        </ion-row>
+        <ion-row class="ion-align-items-start">
+          <ion-col class="ion-text-left" size="auto">
+            <ion-note>Average</ion-note>
+          </ion-col>
+          <ion-col>
+            <ion-label class="ion-text-right">{{ movie?.vote_average }}</ion-label>
+          </ion-col>
+        </ion-row>
+        <ion-row class="ion-align-items-start">
+          <ion-col class="ion-text-left" size="auto">
+            <ion-note>Released date:</ion-note>
+          </ion-col>
+          <ion-col>
+            <ion-label class="ion-text-right">{{movie?.release_date | date: 'yyyy' }}</ion-label>
+          </ion-col>
+        </ion-row>
+        <ion-row class="ion-align-items-start">
+          <ion-col class="ion-text-left" size="auto">
+            <ion-note>Reviews:</ion-note>
+          </ion-col>
+          <ion-col>
+            <ion-label class="ion-text-right">{{movie?.vote_count }}</ion-label>
+          </ion-col>
+        </ion-row>
+        <ion-row class="ion-align-items-start">
+          <ion-col class="ion-text-left" size="auto">
+            <ion-note>Duration</ion-note>
+          </ion-col>
+          <ion-col>
+            <ion-label class="ion-text-right">{{movie?.runtime}}</ion-label>
           </ion-col>
         </ion-row>
         <ion-row class="ion-align-items-start">
@@ -55,48 +78,32 @@
             <ion-note>Genre</ion-note>
           </ion-col>
           <ion-col>
-            <ion-label class="ion-text-right">Action/Aventure</ion-label>
+            <ion-chip color="secondary" *ngFor="let genre of movie?.genres"
+              >{{ genre.name }}</ion-chip>
           </ion-col>
-        </ion-row>
-        <ion-row class="ion-align-items-start">
-          <ion-col class="ion-text-left" size="auto">
-            <ion-note>Genre</ion-note>
-          </ion-col>
-          <ion-col>
-            <ion-label class="ion-text-right">Action/Aventure</ion-label>
-          </ion-col>
-        </ion-row>
-        <ion-row class="ion-align-items-start">
-          <ion-col class="ion-text-left" size="auto">
-            <ion-note>Genre</ion-note>
-          </ion-col>
-          <ion-col>
-            <ion-chip color="secondary" *ngFor="let element of elements"
-              >Action</ion-chip
-            >
-          </ion-col>
-        </ion-row>
+       </ion-row>
       </ion-grid>
     </ion-card-content>
   </ion-card>
 
   <ion-card>
     <ion-card-header>
-      <ion-card-title class="ion-text-center">Actors</ion-card-title>
+      <ion-card-title class="ion-text-center" color="tertiary">Actors</ion-card-title>
     </ion-card-header>
     <ion-card-content class="list-actor">
-      <div class="actor" *ngFor="let element of elements">
-        <ion-avatar>
-          <img
-            alt="Silhouette of a person's head"
-            src="https://ionicframework.com/docs/img/demos/avatar.svg"
+      <div class="actor" *ngFor="let actor of casts.slice(0, 7)">
+        <ion-avatar [routerLink]="['/person/', actor.id]">
+          <img *ngIf="actor.profile_path"
+            alt="{{ actor.name }}"
+            src="https://image.tmdb.org/t/p/w370_and_h556_bestv2/{{actor?.profile_path}}"
           />
+          <img *ngIf="!actor.profile_path" src="assets/icon/defaut-user.png">
         </ion-avatar>
-        <ion-label>Jason Momoa</ion-label>
+        <ion-label>{{ actor.name }}</ion-label>
       </div>
     </ion-card-content>
   </ion-card>
 
-  <!-- CARD FILM FIN -->
+  <!-- CARD FILM FIN -->
 </ion-content>
 

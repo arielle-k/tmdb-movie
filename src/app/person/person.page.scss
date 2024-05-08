@@ -1,0 +1,88 @@
+.actors-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.actor-item {
+  text-align: center;
+  width: 150px; /* Ajustez la largeur selon vos besoins */
+}
+
+.actor-thumbnail {
+  width: 100px;
+  height: 100px;
+  overflow: hidden;
+  border-radius: 50%;
+  margin: 0 auto 10px; /* Ajustez la marge selon vos besoins */
+}
+
+.actor-thumbnail img {
+  width: 100%;
+  height: auto;
+  border-radius: 50%;
+}
+
+.actor-details {
+  font-size: 14px;
+}
+.movie {
+  position: relative;
+}
+
+.list-actor {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.actor {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.favori {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+z-index :10;
+}
+
+//scroll
+.gallery {
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  height: 60vh; //Taille des films
+  width: 100%;
+  overflow-x: auto;
+  gap: 0.5rem;
+
+  .gallery-element {
+    min-width: 250px;
+    height: 100%;
+    flex: 1;
+    transition: 250ms;
+
+    &:hover {
+      min-width: 350px;
+    }
+
+    img {
+      border-radius: 0.5rem; //Bordure de l'image
+      object-fit: cover;
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
+
+.title-home {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
